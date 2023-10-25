@@ -43,6 +43,9 @@ class Armorial(models.Model):
     id_genealogy = models.ForeignKey('genealogy', on_delete=models.CASCADE)
     id_patronym = models.ForeignKey('patronyme', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.armorial_id
+
 class LegentPhotos(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.TextField()
@@ -81,9 +84,12 @@ class LegentPhotos(models.Model):
     edition_year = models.CharField(max_length=255)
     provenance = models.CharField(max_length=255)
     blasonnement_id = models.ForeignKey('Blasonnements', on_delete=models.CASCADE)
-    reference_id = models.ForeignKey('my_references', on_delete=models.CASCADE)
+    reference_id = models.ForeignKey('MyReferences', on_delete=models.CASCADE)
     shot_id = models.ForeignKey('shots', on_delete=models.CASCADE)
     category_id = models.ForeignKey('categories', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 class Details(models.Model):
     id = models.AutoField(primary_key=True)
@@ -117,20 +123,29 @@ class Details(models.Model):
     weapons = models.TextField()
     notes = models.TextField()
     devise = models.TextField()
-    reference_id = models.ForeignKey('my_references', on_delete=models.CASCADE)
+    reference_id = models.ForeignKey('MyReferences', on_delete=models.CASCADE)
     shot_id = models.ForeignKey('shots', on_delete=models.CASCADE)
     category_id = models.ForeignKey('categories', on_delete=models.CASCADE)
     id_patronym = models.ForeignKey('patronyme', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 class Categories(models.Model):
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 class Shots(models.Model):
     shot_id = models.AutoField(primary_key=True)
     author_shot = models.CharField(max_length=255)
     type_shot = models.CharField(max_length=255)
     year_shot = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.shot_id
 
 class MyReferences(models.Model):
     reference_id = models.AutoField(primary_key=True)
@@ -139,29 +154,50 @@ class MyReferences(models.Model):
     ref_IA = models.CharField(max_length=255)
     ref_productions = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.reference_id
+
 class Genealogy(models.Model):
     id_genealogy = models.AutoField(primary_key=True)
     id_patronym = models.ForeignKey('patronyme', on_delete=models.CASCADE)
     name_image = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name_image
 
 class Partnaire(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 class Patronyme(models.Model):
     id_patronym = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 class Equivalence(models.Model):
     id = models.AutoField(primary_key=True)
     expression = models.CharField(max_length=255)
     signification = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.expression
+
 class Presentation(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.description
+
 class Blasonnements(models.Model):
     blasonnement_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
