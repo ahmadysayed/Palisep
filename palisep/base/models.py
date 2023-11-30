@@ -44,7 +44,7 @@ class Armorial(models.Model):
     id_patronym = models.ForeignKey('patronyme', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.armorial_id
+        return self.armorial_id 
 
 class LegentPhotos(models.Model):
     id = models.AutoField(primary_key=True)
@@ -145,7 +145,7 @@ class Shots(models.Model):
     year_shot = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.shot_id
+        return self.author_shot
 
 class MyReferences(models.Model):
     reference_id = models.AutoField(primary_key=True)
@@ -155,7 +155,7 @@ class MyReferences(models.Model):
     ref_productions = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.reference_id
+        return self.ref_IM
 
 class Genealogy(models.Model):
     id_genealogy = models.AutoField(primary_key=True)
