@@ -38,7 +38,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['GET'])
 def getCategory(request):
     category = Categories.objects.get()
-    serializer = CategoriesSerializer(category, many=True)
+    serializer = CategoriesSerializer(category)
     return Response(serializer.data)
 
 
