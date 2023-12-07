@@ -89,6 +89,104 @@ def getGenealogy(request):
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deleteBlasonnement(request, pk):
-    blasonnements = Blasonnements.objects.get(id=pk)
+    blasonnements = Blasonnements.objects.get(blasonnement_id=pk)
     blasonnements.delete()
     return Response("Blasonnement Deleted")
+
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deletePresentation(request, pk):
+    presentation = Presentation.objects.get(id=pk)
+    presentation.delete()
+    return Response("Presentation Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteEquivalence(request, pk):
+    equivalence = Equivalence.objects.get(id=pk)
+    equivalence.delete()
+    return Response("Equivalence Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deletePatronyme(request, pk):
+    patronyme = Patronyme.objects.get(id_patronym=pk)
+    patronyme.delete()
+    return Response("Patronyme Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deletePartnaire(request, pk):
+    partnaire = Partnaire.objects.get(id=pk)
+    partnaire.delete()
+    return Response("Partnaire Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteGenealogy(request, pk):
+    genealogy = Genealogy.objects.get(id_genealogy=pk)
+    genealogy.delete()
+    return Response("Genealogy Deleted")
+
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteMyReferences(request, pk):
+    references = MyReferences.objects.get(reference_id=pk)
+    references.delete()
+    return Response("Reference Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteShots(request, pk):
+    shot = Shots.objects.get(shot_id=pk)
+    shot.delete()
+    return Response("Shot Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteCategories(request, pk):
+    category = Categories.objects.get(category_id=pk)
+    category.delete()
+    return Response("Category Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteDetails(request, pk):
+    detail = Details.objects.get(id=pk)
+    detail.delete()
+    return Response("Detail Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteLegentPhotos(request, pk):
+    legentPhoto = LegentPhotos.objects.get(id=pk)
+    legentPhoto.delete()
+    return Response("LegentPhoto Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteArmorial(request, pk):
+    armorial = Armorial.objects.get(armorial_id=pk)
+    armorial.delete()
+    return Response("Armorial Deleted")
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteAdmin(request, pk):
+    admin = Admin.objects.get(id=pk)
+    admin.delete()
+    return Response("User Deleted")
