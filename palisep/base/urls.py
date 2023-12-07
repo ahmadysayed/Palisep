@@ -10,5 +10,7 @@ urlpatterns = [
     path('patronyme/', views.getPatronyme, name='patronyme'),
     path('partnaire/', views.getPartnaire, name='partnaire'),
     path('genealogy/', views.getGenealogy, name='genealogy'),
+
+    path('blasonnement-delete/<str:pk>/', views.deleteBlasonnement, name="blasonnement-delete")
     
 ]

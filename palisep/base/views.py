@@ -84,3 +84,11 @@ def getGenealogy(request):
     serializer = GenealogySerializer(genealogy, many=True)
     return Response(serializer.data)
 
+# Delete APIs
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteBlasonnement(request, pk):
+    blasonnements = Blasonnements.objects.get(id=pk)
+    blasonnements.delete()
+    return Response("Blasonnement Deleted")
