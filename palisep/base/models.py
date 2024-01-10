@@ -50,6 +50,7 @@ class Armorial(models.Model):
 class LegentPhotos(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.TextField(null=True, blank=True)
+    libelle_img = models.CharField(max_length=255, null=True, blank=True)
     vedette_chan = models.CharField(max_length=255, null=True, blank=True)
     autor_image = models.TextField(null=True, blank=True)
     type_image = models.CharField(max_length=255, null=True, blank=True)
