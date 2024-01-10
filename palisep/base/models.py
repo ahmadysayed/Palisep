@@ -45,7 +45,7 @@ class Armorial(models.Model):
     related_type = models.ForeignKey('Type', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.armorial_id 
+        return self.firstname
 
 class LegentPhotos(models.Model):
     id = models.AutoField(primary_key=True)
