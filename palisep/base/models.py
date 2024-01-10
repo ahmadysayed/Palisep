@@ -39,13 +39,13 @@ class Armorial(models.Model):
     emblem = models.CharField(max_length=255, null=True, blank=True)
     images_geneal = models.TextField(null=True, blank=True)
     image_doc = models.CharField(max_length=255, null=True, blank=True)
-    blasonnement_id = models.ForeignKey('Blasonnements', on_delete=models.CASCADE, null=True, blank=True)
-    id_genealogy = models.ForeignKey('genealogy', on_delete=models.CASCADE, null=True, blank=True)
-    id_patronym = models.ForeignKey('patronyme', on_delete=models.CASCADE, null=True, blank=True)
+    blasonnement_id = models.ForeignKey('Blasonnements', null=True, blank=True, on_delete=models.CASCADE)
+    id_genealogy = models.ForeignKey('Genealogy', null=True, blank=True, on_delete=models.CASCADE)
+    id_patronym = models.ForeignKey('Patronyme', null=True, blank=True, on_delete=models.CASCADE)
     related_type = models.ForeignKey('Type', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.firstname
+        return str(self.armorial_id)
 
 class LegentPhotos(models.Model):
     id = models.AutoField(primary_key=True)
@@ -91,7 +91,7 @@ class LegentPhotos(models.Model):
     related_type = models.ForeignKey('Type', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return str(self.id)
 
 class Details(models.Model):
     id = models.AutoField(primary_key=True)
@@ -132,7 +132,7 @@ class Details(models.Model):
     related_type = models.ForeignKey('Type', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return str(self.id)
 
 class Categories(models.Model):
     category_id = models.AutoField(primary_key=True)
@@ -203,11 +203,11 @@ class Blasonnements(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name) if self.name else f"Blasonnement {self.blasonnement_id}"
 
 class Type(models.Model):
     type_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
