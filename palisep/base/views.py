@@ -536,32 +536,201 @@ def updateBlasonnements(request, pk):
 
 # Search Functionality
 
+
 @api_view(['GET'])
 def search(request):
-    query = request.query_params.get('query', '')
+    query = request.GET.get('q', None)
+    type_name = request.GET.get('type', None)
+    
+    if query is not None and type_name is not None:
+        type_obj = Type.objects.filter(name__iexact=type_name).first()
+        
+        if type_obj is not None:
+            armorials = Armorial.objects.filter(Q(famille__icontains=query) & Q(related_type=type_obj))
+            legent_photos = LegentPhotos.objects.filter(Q(libelle_img__icontains=query) & Q(related_type=type_obj))
+            details = Details.objects.filter(Q(libelle_img__icontains=query) & Q(related_type=type_obj))
 
-    # Perform a case-insensitive search on category names
-    categories_results = Categories.objects.filter(name__icontains=query)
-    categories_serializer = CategoriesSerializer(categories_results, many=True)
+            results = list(armorials.values()) + list(legent_photos.values()) + list(details.values())
+            return Response(results)
 
-    # Perform a case-insensitive search on armorial names
-    armorial_results = Armorial.objects.filter(Q(famille__icontains=query) | Q(country__icontains=query))
-    armorial_serializer = ArmorialSerializer(armorial_results, many=True)
+        return Response({"message": "Type not found."}, status=404)
 
-    # Perform a case-insensitive search on legentphotos titles and descriptions
-    legentphotos_results = LegentPhotos.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
-    legentphotos_serializer = LegentPhotosSerializer(legentphotos_results, many=True)
+    return Response({"message": "No query parameter provided."}, status=400)
 
-    # Perform a case-insensitive search on details titles
-    details_results = Details.objects.filter(title__icontains=query)
-    details_serializer = DetailsSerializer(details_results, many=True)
 
-    # Combine the results from different models into a single response
-    response_data = {
-        'categories': categories_serializer.data,
-        'armorial': armorial_serializer.data,
-        'legentphotos': legentphotos_serializer.data,
-        'details': details_serializer.data,
-    }
 
-    return Response(response_data)
+
+# Get By Id APIs
+
+# User views
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    user = request.user
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def register_user(request):
+    data = request.data
+    try:
+        user = User.objects.create(
+            username=data['username'],
+            email=data['email'],
+            password=data['password']
+        )
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Armorial view
+@api_view(['GET'])
+def get_armorial(request, armorial_id):
+    try:
+        armorial = Armorial.objects.get(armorial_id=armorial_id)
+    except Armorial.DoesNotExist:
+        return Response({'error': 'Armorial not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ArmorialSerializer(armorial)
+    return Response(serializer.data)
+
+
+# LegentPhotos view
+@api_view(['GET'])
+def get_legent_photos(request, id):
+    try:
+        legent_photos = LegentPhotos.objects.get(id=id)
+    except LegentPhotos.DoesNotExist:
+        return Response({'error': 'LegentPhotos not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = LegentPhotosSerializer(legent_photos)
+    return Response(serializer.data)
+
+
+# Details view
+@api_view(['GET'])
+def get_details(request, id):
+    try:
+        details = Details.objects.get(id=id)
+    except Details.DoesNotExist:
+        return Response({'error': 'Details not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = DetailsSerializer(details)
+    return Response(serializer.data)
+
+
+# Categories view
+@api_view(['GET'])
+def get_categories(request, category_id):
+    try:
+        category = Categories.objects.get(category_id=category_id)
+    except Categories.DoesNotExist:
+        return Response({'error': 'Categories not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CategoriesSerializer(category)
+    return Response(serializer.data)
+
+
+# Shots view
+@api_view(['GET'])
+def get_shots(request, shot_id):
+    try:
+        shots = Shots.objects.get(shot_id=shot_id)
+    except Shots.DoesNotExist:
+        return Response({'error': 'Shots not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ShotsSerializer(shots)
+    return Response(serializer.data)
+
+
+# MyReferences view
+@api_view(['GET'])
+def get_my_references(request, reference_id):
+    try:
+        my_references = MyReferences.objects.get(reference_id=reference_id)
+    except MyReferences.DoesNotExist:
+        return Response({'error': 'MyReferences not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = MyReferencesSerializer(my_references)
+    return Response(serializer.data)
+
+
+# Genealogy view
+@api_view(['GET'])
+def get_genealogy(request, id_genealogy):
+    try:
+        genealogy = Genealogy.objects.get(id_genealogy=id_genealogy)
+    except Genealogy.DoesNotExist:
+        return Response({'error': 'Genealogy not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = GenealogySerializer(genealogy)
+    return Response(serializer.data)
+
+
+# Partnaire view
+@api_view(['GET'])
+def get_partnaire(request, id):
+    try:
+        partnaire = Partnaire.objects.get(id=id)
+    except Partnaire.DoesNotExist:
+        return Response({'error': 'Partnaire not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PartnaireSerializer(partnaire)
+    return Response(serializer.data)
+
+# Patronyme view
+@api_view(['GET'])
+def get_patronyme(request, id_patronym):
+    try:
+        patronyme = Patronyme.objects.get(id_patronym=id_patronym)
+    except Patronyme.DoesNotExist:
+        return Response({'error': 'Patronyme not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PatronymeSerializer(patronyme)
+    return Response(serializer.data)
+
+# Equivalence view
+@api_view(['GET'])
+def get_equivalence(request, id):
+    try:
+        equivalence = Equivalence.objects.get(id=id)
+    except Equivalence.DoesNotExist:
+        return Response({'error': 'Equivalence not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = EquivalenceSerializer(equivalence)
+    return Response(serializer.data)
+
+# Presentation view
+@api_view(['GET'])
+def get_presentation(request, id):
+    try:
+        presentation = Presentation.objects.get(id=id)
+    except Presentation.DoesNotExist:
+        return Response({'error': 'Presentation not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PresentationSerializer(presentation)
+    return Response(serializer.data)
+
+# Blasonnements view
+@api_view(['GET'])
+def get_blasonnements(request, blasonnement_id):
+    try:
+        blasonnements = Blasonnements.objects.get(blasonnement_id=blasonnement_id)
+    except Blasonnements.DoesNotExist:
+        return Response({'error': 'Blasonnements not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = BlasonnementsSerializer(blasonnements)
+    return Response(serializer.data)
+
+# Type view
+@api_view(['GET'])
+def get_type(request, type_id):
+    try:
+        type_obj = Type.objects.get(type_id=type_id)
+    except Type.DoesNotExist:
+        return Response({'error': 'Type not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = TypeSerializer(type_obj)
+    return Response(serializer.data)

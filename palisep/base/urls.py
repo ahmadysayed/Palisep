@@ -58,7 +58,23 @@ urlpatterns = [
     path('api/presentation/update/<int:pk>/', views.updatePresentation, name='update_presentation'),
     path('api/blasonnements/update/<int:pk>/', views.updateBlasonnements, name='update_blasonnements'),
 
+    path('search/', views.search, name='search'),
 
-    path('api/search/', views.search, name='search'),
+
+    path('user/profile/', views.get_user_profile, name='user-profile'),
+    path('user/register/', views.register_user, name='register-user'),
+    path('armorial/<int:armorial_id>/', views.get_armorial, name='get-armorial'),
+    path('legent-photos/<int:id>/', views.get_legent_photos, name='get-legent-photos'),
+    path('details/<int:id>/', views.get_details, name='get-details'),
+    path('categories/<int:category_id>/', views.get_categories, name='get-categories'),
+    path('shots/<int:shot_id>/', views.get_shots, name='get-shots'),
+    path('my-references/<int:reference_id>/', views.get_my_references, name='get-my-references'),
+    path('genealogy/<int:id_genealogy>/', views.get_genealogy, name='get-genealogy'),
+    path('partnaire/<int:id>/', views.get_partnaire, name='get-partnaire'),
+    path('patronyme/<int:id_patronym>/', views.get_patronyme, name='get-patronyme'),
+    path('equivalence/<int:id>/', views.get_equivalence, name='get-equivalence'),
+    path('presentation/<int:id>/', views.get_presentation, name='get-presentation'),
+    path('blasonnements/<int:blasonnement_id>/', views.get_blasonnements, name='get-blasonnements'),
+    path('type/<int:type_id>/', views.get_type, name='get-type'),
     
 ]

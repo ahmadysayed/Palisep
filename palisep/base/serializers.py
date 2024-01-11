@@ -134,3 +134,8 @@ class BlasonnementsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blasonnements
         fields = '__all__'
+
+class TypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Type
+        fields = '__all__'
