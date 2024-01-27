@@ -71,6 +71,7 @@ class LegentPhotos(models.Model):
     date = models.CharField(max_length=255, null=True, blank=True)
     denomination = models.CharField(max_length=255, null=True, blank=True)
     title = models.CharField(max_length=255, null=True, blank=True)
+    category_id = models.ForeignKey('categories', on_delete=models.CASCADE, null=True, blank=True)
     material = models.CharField(max_length=255, null=True, blank=True)
     ref_productions = models.CharField(max_length=255, null=True, blank=True)
     biblio = models.CharField(max_length=255, null=True, blank=True)
@@ -89,7 +90,7 @@ class LegentPhotos(models.Model):
     blasonnement_id = models.ForeignKey('Blasonnements', on_delete=models.CASCADE, null=True, blank=True)
     reference_id = models.ForeignKey('MyReferences', on_delete=models.CASCADE, null=True, blank=True)
     shot_id = models.ForeignKey('shots', on_delete=models.CASCADE, null=True, blank=True)
-    category_id = models.ForeignKey('categories', on_delete=models.CASCADE, null=True, blank=True)
+    
     related_type = models.ForeignKey('Type', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
