@@ -47,16 +47,10 @@ class ArmorialSerializer(serializers.ModelSerializer):
 
 
 class LegentPhotosSerializer(serializers.ModelSerializer):
-    reviews = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
         model = LegentPhotos
         fields = '__all__'
 
-    # def get_reviews(self, obj):
-    #     reviews = obj.review_set.all()
-    #     serializer = ReviewSerializer(reviews, many=True)
-    #     return serializer.data
 
 class DetailsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,26 +68,6 @@ class ShotsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shots
         fields = '__all__'
-
-    # def get_ordershot(self, obj):
-    #     items = obj.orderitem_set.all()
-    #     serializer = OrderItemSerializer(items, many=True)
-    #     return serializer.data
-    
-    # def get_shippingAddress(self, obj):
-    #     try:
-    #         address = ShippingAddressSerializer(
-    #             obj.shippingaddress, many=False
-    #         ).data
-    #     except:
-    #         address = False
-        
-    #     return address
-
-    # def get_user(self, obj):
-    #     user = obj.user
-    #     serializer = UserSerializer(user, many=False)
-    #     return serializer.data
 
 
 class MyReferencesSerializer(serializers.ModelSerializer):

@@ -43,8 +43,8 @@ def getBlasonnements(request):
 
 @api_view(['GET'])
 def getCategory(request):
-    category = Categories.objects.get()
-    serializer = CategoriesSerializer(category)
+    category = Categories.objects.all()
+    serializer = CategoriesSerializer(category, many=True)
     return Response(serializer.data)
 
 
