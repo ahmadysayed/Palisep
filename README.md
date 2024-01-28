@@ -30,7 +30,7 @@ The core of your web application is built on **Django 4.2.6**, a high-level Pyth
 
 # Download & Setup Instructions
 
-* 1 - Clone project: git clone https://github.com/ahmadysayed/GiskardMeetingScheduler.git
-* 2 - cd meeting_scheduler
+* 1 - Clone project: git clone https://github.com/ahmadysayed/Palisep.git
+* 2 - cd palisep
 * 3 - pip install -r requirements.txt
 * 4 - python manage.py runserver
